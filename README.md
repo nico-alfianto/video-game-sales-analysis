@@ -128,7 +128,7 @@ Business Insights
 ## 🎯 Number of Games by Genre
 
 <p align="center">
-<img src="images/genre_distribution.png" width="850">
+<img src="images/genre_distribution.jpg" width="850">
 </p>
 
 ### Insight
@@ -142,7 +142,7 @@ Business Insights
 ## 🎮 Top 5 Platforms by Global Sales
 
 <p align="center">
-<img src="images/platform_sales.png" width="700">
+<img src="images/platform_sales.jpg" width="700">
 </p>
 
 ### Insight
@@ -156,7 +156,7 @@ Business Insights
 ## 📈 Sales Trend Over Time
 
 <p align="center">
-<img src="images/sales_trend.png" width="900">
+<img src="images/sales_trend.jpg" width="900">
 </p>
 
 ### Insight
@@ -169,10 +169,6 @@ Business Insights
 
 ## 🌍 Regional Sales Comparison
 
-<p align="center">
-<img src="images/regional_sales.png" width="850">
-</p>
-
 ### Insight
 
 - North America generated the largest overall sales.
@@ -184,7 +180,7 @@ Business Insights
 ## 🏆 Top Selling Games Worldwide
 
 <p align="center">
-<img src="images/global_top_games.png" width="900">
+<img src="images/global_top_games.jpg" width="900">
 </p>
 
 ### Insight
@@ -197,7 +193,7 @@ Business Insights
 ## 🇺🇸 Top Games in North America
 
 <p align="center">
-<img src="images/na_top_games.png" width="900">
+<img src="images/na_top_games.jpg" width="900">
 </p>
 
 North American consumers mainly favor Sports and Action games.
@@ -207,7 +203,7 @@ North American consumers mainly favor Sports and Action games.
 ## 🇪🇺 Top Games in Europe
 
 <p align="center">
-<img src="images/eu_top_games.png" width="900">
+<img src="images/eu_top_games.jpg" width="900">
 </p>
 
 European purchasing behavior closely follows the global sales trend.
@@ -217,7 +213,7 @@ European purchasing behavior closely follows the global sales trend.
 ## 🇯🇵 Top Games in Japan
 
 <p align="center">
-<img src="images/jp_top_games.png" width="900">
+<img src="images/jp_top_games.jpg" width="900">
 </p>
 
 Japanese gamers show stronger preferences for Role-Playing and Nintendo-exclusive titles.
@@ -227,7 +223,7 @@ Japanese gamers show stronger preferences for Role-Playing and Nintendo-exclusiv
 ## 🌎 Top Games in Other Regions
 
 <p align="center">
-<img src="images/other_top_games.png" width="900">
+<img src="images/other_top_games.jpg" width="900">
 </p>
 
 Sales outside North America, Europe, and Japan generally follow the global trend with lower total volumes.
@@ -272,15 +268,14 @@ video-game-sales-analysis/
 │── vgsales.ipynb
 │── vgsales.csv
 │── images/
-│   ├── genre_distribution.png
-│   ├── platform_sales.png
-│   ├── sales_trend.png
-│   ├── regional_sales.png
-│   ├── global_top_games.png
-│   ├── na_top_games.png
-│   ├── eu_top_games.png
-│   ├── jp_top_games.png
-│   └── other_top_games.png
+│   ├── genre_distribution.jpg
+│   ├── platform_sales.jpg
+│   ├── sales_trend.jpg
+│   ├── global_top_games.jog
+│   ├── na_top_games.jpg
+│   ├── eu_top_games.jpg
+│   ├── jp_top_games.jpg
+│   └── other_top_games.jpg
 ```
 
 ---
