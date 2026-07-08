@@ -43,15 +43,19 @@ The objectives of this project are to answer the following business questions:
 
 ### Dataset
 
-**Video Game Sales Dataset**
+### 🎮 Video Game Sales Dataset
 
-📥 **Source**
+<p align="center">
 
-https://www.kaggle.com/code/kotsop/video-game-sales-analysis-eda-ml
+<a href="https://www.kaggle.com/code/kotsop/video-game-sales-analysis-eda-ml">
+<img src="https://img.shields.io/badge/Kaggle-Dataset-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white">
+</a>
 
-📒 **Google Colab Notebook**
+<a href="https://colab.research.google.com/drive/1LGuvtLcYH-D10MLp59QtODjCu5dTuw70">
+<img src="https://img.shields.io/badge/Open%20in-Google%20Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white">
+</a>
 
-https://colab.research.google.com/drive/1LGuvtLcYH-D10MLp59QtODjCu5dTuw70
+</p>
 
 ### Dataset Summary
 
@@ -299,14 +303,21 @@ Potential future enhancements include:
 
 **Information Systems Student | Data Analyst Enthusiast**
 
-📧 Email  
-alfiantonico9@gmail.com
+<p align="center">
 
-💼 LinkedIn  
-https://www.linkedin.com/in/nico-alfianto
+<a href="mailto:alfiantonico9@gmail.com">
+<img src="https://img.shields.io/badge/Email-alfiantonico9%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white">
+</a>
 
-🐙 GitHub  
-https://github.com/nico-alfianto
+<a href="https://www.linkedin.com/in/nico-alfianto">
+<img src="https://img.shields.io/badge/LinkedIn-Nico%20Alfianto-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white">
+</a>
+
+<a href="https://github.com/nico-alfianto">
+<img src="https://img.shields.io/badge/GitHub-nico--alfianto-181717?style=for-the-badge&logo=github&logoColor=white">
+</a>
+
+</p>
 
 ---
 
