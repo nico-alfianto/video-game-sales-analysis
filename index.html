@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Game Sales Analysis | EDA | Nico Alfianto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0A0A0B;--card:#131315;--card2:#1A1A1D;--border:#232326;--text:#F4F4F5;--muted:#A1A1AA;--muted2:#71717A;--pill:#1E1E21}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+header{padding:48px 0 32px;border-bottom:1px solid var(--border)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);font-weight:600;margin-bottom:16px}
+.eyebrow span{color:var(--text)}
+h1{font-size:42px;line-height:.95;letter-spacing:-.04em;font-weight:800}
+h1 em{font-style:normal;color:var(--muted)}
+.header-desc{max-width:560px;color:var(--muted);font-size:16px;margin-top:18px;line-height:1.7}
+.header-right{text-align:right}
+.header-right strong{display:block;font-size:15px}
+.header-right p{color:var(--muted);font-size:14px;margin-top:4px}
+.header-right .actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}
+.btn-white{display:inline-block;background:#fff;color:#000;font-size:14px;font-weight:600;padding:11px 18px;border-radius:999px}
+.btn-outline{display:inline-block;background:transparent;color:#fff;border:1px solid #3F3F46;font-size:14px;font-weight:600;padding:11px 18px;border-radius:999px}
+main{padding:32px 0 80px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:20px}
+.card h3{font-size:18px;margin-bottom:6px}
+.card p.sub{font-size:14px;color:var(--muted);margin-bottom:18px;line-height:1.7}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.kpi{background:var(--card2);border:1px solid var(--border);border-radius:16px;padding:20px}
+.kpi span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);font-weight:600}
+.kpi b{display:block;font-size:28px;letter-spacing:-.03em;margin:8px 0 4px}
+.kpi small{font-size:13px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.image-wrapper{width:100%;height:320px;background:#0A0A0B;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px;cursor:zoom-in}
+.image-wrapper img{width:100%;height:100%;object-fit:contain}
+.image-wrapper.tall{height:380px}
+.insight{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:16px;font-size:14px;line-height:1.7;color:var(--muted)}
+.insight b{color:#fff}
+.table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+.table th{text-align:left;padding:12px;border-bottom:1px solid var(--border);color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.table td{padding:12px;border-bottom:1px solid var(--border);line-height:1.6;vertical-align:top}
+.pg-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:20px}
+.pg-step{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:16px}
+.pg-step span{font-size:12px;color:var(--muted2);font-weight:600;letter-spacing:.08em}
+.pg-step b{display:block;font-size:14px;margin:6px 0 4px}
+.pg-step p{font-size:13px;color:var(--muted);line-height:1.6}
+.pg-preset{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.pg-preset button{font-family:inherit;background:transparent;border:1px solid #3F3F46;color:var(--text);padding:9px 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer}
+.pg-preset button.active{background:#fff;color:#000;border-color:#fff}
+.pg-grid2{display:grid;grid-template-columns:340px 1fr;gap:24px;margin-top:20px;align-items:start}
+.pg-seg{display:flex;gap:8px;flex-wrap:wrap}
+.pg-seg button{font-family:inherit;background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px 12px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer}
+.pg-seg button.on{background:#fff;color:#000;border-color:#fff}
+.pg-big{font-size:42px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.pg-badge{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border-radius:999px;white-space:nowrap}
+.pg-badge.green{background:#052E16;color:#86EFAC;border:1px solid #166534}
+.pg-contrib,.pg-action{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-top:12px}
+.pg-meta{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;font-size:12px;color:var(--muted2);line-height:1.7}
+.pg-meta b{color:var(--text)}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);justify-content:center;align-items:center;z-index:9999}
+.modal.active{display:flex}
+.modal img{max-width:92%;max-height:88%;border-radius:12px}
+.modal-close{position:absolute;top:20px;right:30px;font-size:40px;color:#fff;cursor:pointer}
+footer{border-top:1px solid var(--border);padding:28px 0 40px;color:var(--muted2);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:900px){h1{font-size:34px}.kpi-grid{grid-template-columns:1fr 1fr}.grid2,.pg-grid2,.pg-steps{grid-template-columns:1fr}.header-right{text-align:left}.header-right .actions{justify-content:flex-start}.image-wrapper,.image-wrapper.tall{height:260px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="top"><div>
+<div class="eyebrow">Exploratory Data Analysis <span>— Python • Pandas • Seaborn</span></div>
+<h1>Video Game<br><em>Sales Analysis</em></h1>
+<p class="header-desc">Exploratory Data Analysis of global video game sales. Which platform wins? Which genre dominates? Which region buys most? Which era peaked? Answered with data, not opinion.</p>
+<p style="font-size:13px;color:var(--muted2);margin-top:12px;">Data Science Algorithms Course — Universitas Bina Sarana Informatika</p>
+</div><div class="header-right"><strong>Nico Alfianto</strong><p>Bogor, Indonesia — Data Analyst Enthusiast</p><div class="actions"><a class="btn-white" href="https://nico-myproject.github.io">Back to Portfolio</a><a class="btn-outline" href="#eda-explorer">Explore EDA</a></div></div></div></div></header>
+<main class="wrap">
+<div class="kpi-grid" style="margin-bottom:20px;">
+<div class="kpi"><span>Dataset</span><b>16,500+ Records</b><small>11 Variables</small></div>
+<div class="kpi"><span>Top Platform</span><b>GameBoy (GB)</b><small>Nintendo dominates</small></div>
+<div class="kpi"><span>Industry Peak</span><b>2008–2010</b><small>Then declined</small></div>
+<div class="kpi"><span>Top Game</span><b>Wii Sports</b><small>82.74M Global Sales</small></div>
+</div>
+<div class="card"><h3>Project Overview</h3><p style="font-size:14px;color:var(--muted);line-height:1.8;">The video game industry has generated billions of dollars in revenue worldwide across multiple gaming platforms and regions. Understanding historical sales trends helps identify market opportunities, consumer preferences, and platform performance. This project performs Exploratory Data Analysis on the Video Game Sales dataset using Python — uncovering sales trends, best-selling platforms, genre popularity, and regional performance through statistical analysis and visualization.</p></div>
+<!-- PLAYGROUND -->
+<div class="card" id="eda-explorer">
+<div class="eyebrow" style="margin-bottom:10px;">Interactive Playground <span>— EDA Explorer</span></div>
+<h2 style="font-size:28px;">Explore The Data Yourself</h2>
+<p class="sub" style="max-width:720px;">EDA is not about looking at charts — it's about asking questions. Pick a region, then see Top Games + Insight change. This is the same logic as the notebook, made interactive.</p>
+<div class="pg-steps">
+<div class="pg-step"><span>STEP 01</span><b>Pick a region</b><p>Global, NA, EU, JP, or Other. Each market has different taste.</p></div>
+<div class="pg-step"><span>STEP 02</span><b>Read Top Games</b><p>See which titles dominate that region.</p></div>
+<div class="pg-step"><span>STEP 03</span><b>Read the insight</b><p>What does it mean for a publisher? That's data storytelling.</p></div>
+</div>
+<div class="pg-preset" id="pgPreset">
+<button onclick="setRegionPG('global',this)" class="active">Global</button>
+<button onclick="setRegionPG('na',this)">North America</button>
+<button onclick="setRegionPG('eu',this)">Europe</button>
+<button onclick="setRegionPG('jp',this)">Japan</button>
+<button onclick="setRegionPG('other',this)">Other Regions</button>
+</div>
+<div class="pg-grid2">
+<div>
+<div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);font-weight:600;">Business Questions</div>
+<div class="pg-contrib" style="margin-top:12px;"><p style="font-size:14px;line-height:2;color:var(--muted);"><b style="color:#fff;">1.</b> Which platform has highest global sales?<br><b style="color:#fff;">2.</b> Which genres dominate?<br><b style="color:#fff;">3.</b> How did sales change over time?<br><b style="color:#fff;">4.</b> Which region contributes most?<br><b style="color:#fff;">5.</b> Which games win in each market?</p></div>
+<div class="pg-action"><div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Dataset</div><p style="font-size:14px;line-height:1.7;color:var(--muted);margin-top:6px;">16,500+ records • 11 variables<br>Name, Platform, Year, Genre, Publisher, NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales</p></div>
+</div>
+<div>
+<div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);font-weight:600;">Selected Region</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-top:10px;gap:12px;">
+<div><div class="pg-big" id="pgTitle">Global</div><div style="font-size:14px;color:var(--muted);margin-top:6px;" id="pgSubtitle">Top Games Worldwide</div></div>
+<span class="pg-badge green" id="pgBadge">TOP: WII SPORTS</span>
+</div>
+<div style="overflow-x:auto;margin-top:14px;"><table class="table"><thead><tr><th>Rank</th><th>Game</th><th>Genre</th><th>Sales (M)</th></tr></thead><tbody id="pgBody"></tbody></table></div>
+<div class="pg-contrib"><div style="font-size:13px;font-weight:700;margin-bottom:6px;">Insight — What It Means</div><div id="pgWhy" style="font-size:14px;line-height:1.7;color:var(--muted);"></div></div>
+<button onclick="runPG()" class="btn-white" style="margin-top:14px;border:none;cursor:pointer;font-family:inherit;">Refresh Explorer</button>
+</div>
+</div>
+<div class="pg-meta"><div><b>Source:</b> vgsales.csv</div><div><b>Notebook:</b> vgsales.ipynb</div><div><b>Tools:</b> Pandas, NumPy, Matplotlib, Seaborn</div><div><b>Note:</b> Sales in millions of units. Explorer shows top titles per region from EDA.</div></div>
+</div>
+
+<!-- 4 STORIES -->
+<div class="card"><h3>The 4 Stories in This EDA</h3><p class="sub">If you only read 4 things, read these.</p><div class="grid2">
+<div><p style="font-size:14px;color:var(--muted);line-height:1.8;"><b style="color:#fff;">1. Platform — Nintendo Wins</b><br>GameBoy (GB) achieved the highest total sales. Nintendo platforms dominate the market. Platform popularity strongly affects overall sales.<br><br><b style="color:#fff;">2. Genre — Action Dominates</b><br>Action is the most common genre in the dataset. Sports and Misc also have high counts. Puzzle and Strategy appear less frequently.</p></div>
+<div><p style="font-size:14px;color:var(--muted);line-height:1.8;"><b style="color:#fff;">3. Trend — Peak 2008–2010</b><br>Sales increased rapidly in early 2000s, reached highest between 2008–2010, then gradually declined afterward.<br><br><b style="color:#fff;">4. Region — NA Leads, JP is Different</b><br>North America generated largest sales, Europe second. Japan showed different preferences — stronger for Role-Playing and Nintendo-exclusive titles.</p></div>
+</div></div>
+
+<!-- VISUALIZATIONS -->
+<div class="card"><h3>Analysis Results & Visualizations</h3><p class="sub">Real charts from the notebook. Click to zoom.</p><div class="grid2">
+<div><h3 style="margin-bottom:10px;">Number of Games by Genre</h3><div class="image-wrapper" onclick="openModal('images/genre_distribution.jpg')"><img src="images/genre_distribution.jpg" alt="Genre" loading="lazy"></div><div class="insight"><b>Insight:</b> Action is most common. Sports and Misc also high. Puzzle and Strategy less frequent.</div></div>
+<div><h3 style="margin-bottom:10px;">Top 5 Platforms by Global Sales</h3><div class="image-wrapper" onclick="openModal('images/platform_sales.jpg')"><img src="images/platform_sales.jpg" alt="Platform" loading="lazy"></div><div class="insight"><b>Insight:</b> GameBoy highest total sales. Nintendo platforms dominate.</div></div>
+<div><h3 style="margin-bottom:10px;">Sales Trend Over Time</h3><div class="image-wrapper" onclick="openModal('images/sales_trend.jpg')"><img src="images/sales_trend.jpg" alt="Trend" loading="lazy"></div><div class="insight"><b>Insight:</b> Rapid growth early 2000s, peak 2008–2010, then decline.</div></div>
+<div><h3 style="margin-bottom:10px;">Top Selling Games Worldwide</h3><div class="image-wrapper" onclick="openModal('images/global_top_games.jpg')"><img src="images/global_top_games.jpg" alt="Global" loading="lazy"></div><div class="insight"><b>Insight:</b> Wii Sports dominates global sales. Sports consistently among top sellers.</div></div>
+<div><h3 style="margin-bottom:10px;">Top Games in North America</h3><div class="image-wrapper" onclick="openModal('images/na_top_games.jpg')"><img src="images/na_top_games.jpg" alt="NA" loading="lazy"></div><div class="insight"><b>Insight:</b> NA consumers favor Sports and Action games.</div></div>
+<div><h3 style="margin-bottom:10px;">Top Games in Europe</h3><div class="image-wrapper" onclick="openModal('images/eu_top_games.jpg')"><img src="images/eu_top_games.jpg" alt="EU" loading="lazy"></div><div class="insight"><b>Insight:</b> European behavior closely follows global sales trend.</div></div>
+<div><h3 style="margin-bottom:10px;">Top Games in Japan</h3><div class="image-wrapper" onclick="openModal('images/jp_top_games.jpg')"><img src="images/jp_top_games.jpg" alt="JP" loading="lazy"></div><div class="insight"><b>Insight:</b> Japanese gamers prefer Role-Playing and Nintendo-exclusive titles — different from Western markets.</div></div>
+<div><h3 style="margin-bottom:10px;">Top Games in Other Regions</h3><div class="image-wrapper" onclick="openModal('images/other_top_games.jpg')"><img src="images/other_top_games.jpg" alt="Other" loading="lazy"></div><div class="insight"><b>Insight:</b> Outside NA / EU / JP, sales follow global trend with lower volumes.</div></div>
+</div></div>
+
+<!-- WORKFLOW + FINDINGS -->
+<div class="grid2">
+<div class="card"><h3>Data Analysis Workflow</h3><p class="sub">How it was done.</p><p style="font-size:14px;color:var(--muted);line-height:2;"><b style="color:#fff;">1. Business Understanding</b><br><b style="color:#fff;">2. Data Collection</b><br><b style="color:#fff;">3. Data Cleaning</b> — Missing values, data type conversion<br><b style="color:#fff;">4. Exploratory Data Analysis</b> — Descriptive stats, platform / genre / trend / regional<br><b style="color:#fff;">5. Data Visualization</b> — Matplotlib + Seaborn<br><b style="color:#fff;">6. Business Insights</b></p></div>
+<div class="card"><h3>Key Findings</h3><p class="sub">Takeaways.</p><p style="font-size:14px;color:var(--muted);line-height:1.9;">GameBoy (GB) recorded highest platform sales<br>Action is most common genre<br>Industry peaked 2008–2010<br>North America contributed largest share<br>Wii Sports remains highest-selling game worldwide</p><div class="insight" style="margin-top:12px;"><b>Business implication:</b> If you are a publisher, platform choice + region targeting matter more than just making a good game. Same game sells very differently in NA vs JP.</div></div>
+</div>
+
+<!-- REPO + FUTURE -->
+<div class="grid2">
+<div class="card"><h3>Repository & Files</h3><p class="sub">Source files.</p><pre>video-game-sales-analysis/
+├── README.md
+├── vgsales.ipynb
+├── vgsales.csv
+└── images/
+    ├── genre_distribution.jpg
+    ├── platform_sales.jpg
+    ├── sales_trend.jpg
+    ├── global_top_games.jpg
+    ├── na_top_games.jpg
+    ├── eu_top_games.jpg
+    ├── jp_top_games.jpg
+    └── other_top_games.jpg</pre><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;"><a class="btn-white" href="vgsales.ipynb">Open Notebook</a><a class="btn-outline" href="vgsales.csv">Download Dataset (CSV)</a></div></div>
+<div class="card"><h3>Future Improvements</h3><p class="sub">Next steps.</p><p style="font-size:14px;color:var(--muted);line-height:1.9;">ML model to predict future game sales<br>Interactive dashboard in Power BI / Looker Studio<br>Publisher performance analysis<br>Time series forecasting<br>Customer segmentation by gaming preferences</p></div>
+</div>
+
+<div class="card"><h3>Skills Demonstrated</h3><p class="sub">What this project proves.</p><p style="font-size:14px;color:var(--muted);line-height:1.8;">Exploratory Data Analysis • Data Cleaning • Data Wrangling • Data Visualization • Statistical Analysis • Business Understanding • Data Storytelling • Python • Pandas • NumPy • Matplotlib • Seaborn</p></div>
+
+</main>
+<footer><div class="wrap"><span>© 2026 Nico Alfianto — Video Game Sales Analysis. Data Science Algorithms 2026</span><span><a href="https://nico-myproject.github.io">Portfolio</a></span></div></footer>
+<div class="modal" id="imageModal" onclick="closeModal()"><span class="modal-close">&times;</span><img id="modalImg" src="" alt="Full View"></div>
+<script>
+function openModal(src){document.getElementById('modalImg').src=src;document.getElementById('imageModal').classList.add('active');}
+function closeModal(){document.getElementById('imageModal').classList.remove('active');}
+var REGIONS={
+global:{title:'Global',sub:'Top Games Worldwide',badge:'TOP: WII SPORTS',rows:[['1','Wii Sports','Sports','82.74'],['2','Super Mario Bros.','Platform','40.24'],['3','Mario Kart Wii','Racing','35.82'],['4','Wii Sports Resort','Sports','33.00'],['5','Pokemon Red / Green / Blue','Role-Playing','31.37']],why:'Wii Sports dominates global sales. Sports games consistently appear among highest sellers. Global taste is driven by accessible, family-friendly titles on Nintendo platforms.'},
+na:{title:'North America',sub:'Top Games in North America',badge:'NA LOVES SPORTS & ACTION',rows:[['1','Wii Sports','Sports','41.49'],['2','Super Mario Bros.','Platform','29.08'],['3','Mario Kart Wii','Racing','15.85'],['4','Wii Sports Resort','Sports','15.75'],['5','Pokemon Red / Green / Blue','Role-Playing','11.27']],why:'North American consumers mainly favor Sports and Action games. NA contributed the largest share of global sales — if you win NA, you win globally.'},
+eu:{title:'Europe',sub:'Top Games in Europe',badge:'EU FOLLOWS GLOBAL TREND',rows:[['1','Wii Sports','Sports','29.02'],['2','Mario Kart Wii','Racing','12.88'],['3','Wii Sports Resort','Sports','11.01'],['4','Super Mario Bros.','Platform','3.58'],['5','Pokemon Red / Green / Blue','Role-Playing','8.89']],why:'European purchasing behavior closely follows the global sales trend. Same winners as Global — Wii Sports, Mario Kart Wii, Wii Sports Resort.'},
+jp:{title:'Japan',sub:'Top Games in Japan',badge:'JP IS DIFFERENT — RPG + NINTENDO',rows:[['1','Pokemon Red / Green / Blue','Role-Playing','10.22'],['2','Super Mario Bros.','Platform','6.81'],['3','Pokemon Gold / Silver','Role-Playing','7.20'],['4','New Super Mario Bros.','Platform','6.50'],['5','Pokemon Diamond / Pearl','Role-Playing','6.04']],why:'Japanese gamers show stronger preferences for Role-Playing and Nintendo-exclusive titles. This is the key regional difference — a game that flops in NA can be a hit in JP if it is RPG / Nintendo.'},
+other:{title:'Other Regions',sub:'Top Games in Other Regions',badge:'FOLLOWS GLOBAL, LOWER VOLUME',rows:[['1','Wii Sports','Sports','8.46'],['2','Mario Kart Wii','Racing','3.31'],['3','Wii Sports Resort','Sports','3.28'],['4','Super Mario Bros.','Platform','0.77'],['5','Pokemon Red / Green / Blue','Role-Playing','1.00']],why:'Sales outside NA / EU / JP generally follow the global trend with lower total volumes. Same winners, smaller market.'}
+};
+var curR='global';
+function setRegionPG(r,btn){curR=r;var b=document.querySelectorAll('#pgPreset button');for(var i=0;i<b.length;i++)b[i].classList.remove('active');if(btn)btn.classList.add('active');showR();}
+function showR(){var d=REGIONS[curR];document.getElementById('pgTitle').textContent=d.title;document.getElementById('pgSubtitle').textContent=d.sub;document.getElementById('pgBadge').textContent=d.badge;document.getElementById('pgWhy').textContent=d.why;document.getElementById('pgBody').innerHTML=d.rows.map(function(r){return '<tr><td>'+r[0]+'</td><td><b style="color:#fff;">'+r[1]+'</b></td><td>'+r[2]+'</td><td>'+r[3]+'M</td></tr>';}).join('');}
+function runPG(){showR();}
+showR();
+</script>
+</body>
+  </html>
